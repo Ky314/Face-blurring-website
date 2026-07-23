@@ -7,9 +7,9 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 # Rails app lives here
 WORKDIR /rails
 
-# Install base packages (Python, OpenCV, ffmpeg を追加)
+# Install base packages (Python, pip, ffmpeg を追加。opencvはpip側でheadlessを入れます)
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 python3 python3-pip python3-opencv ffmpeg && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 python3 python3-pip ffmpeg && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -36,8 +36,9 @@ RUN bundle install && \
 # Copy application code
 COPY . .
 
-# Pythonの依存関係（ultralytics / YOLOv8用）をインストール
-RUN pip3 install --no-cache-dir ultralytics opencv-python
+# Pythonの依存関係（requirements.txt から ultralytics / opencv-python-headless をインストール）
+COPY requirements.txt ./
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
