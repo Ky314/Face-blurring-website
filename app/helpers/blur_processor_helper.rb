@@ -1,0 +1,2 @@
+module BlurProcessorHelper
+end

@@ -1,0 +1,28 @@
+<div style="max-width: 600px; margin: 40px auto; font-family: sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; text-align: center;">
+  <h2 style="color: #28a745;">モザイク処理が完了しました！</h2>
+  <p style="color: #666; font-size: 14px; margin-bottom: 20px;">AIによる顔・人物のぼかし加工が終わりました。プレビュー確認およびダウンロードが可能です。</p>
+
+  <% if @output_filename.present? %>
+    <!-- 処理済み動画のプレビュー -->
+    <div style="margin-bottom: 20px;">
+      <video controls style="max-width: 100%; border-radius: 4px; border: 1px solid #ccc;">
+        <source src="<%= @download_path %>" type="video/mp4">
+        お使いのブラウザは動画タグをサポートしていません。
+      </video>
+    </div>
+
+    <!-- ダウンロードボタン -->
+    <div style="margin-bottom: 20px;">
+      <a href="<%= @download_path %>" download="<%= @output_filename %>" style="background: #28a745; color: white; text-decoration: none; padding: 12px 24px; font-size: 16px; border-radius: 4px; display: inline-block;">
+        処理済み動画をダウンロード
+      </a>
+    </div>
+  <% else %>
+    <p style="color: red;">動画ファイルが見つかりませんでした。</p>
+  <% end %>
+
+  <!-- トップに戻るリンク -->
+  <div style="margin-top: 30px;">
+    <%= link_to "別の動画を処理する", root_path, style: "color: #007bff; text-decoration: none;" %>
+  </div>
+</div>

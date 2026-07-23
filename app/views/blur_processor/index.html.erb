@@ -1,0 +1,30 @@
+<h2>AI動画自動ぼかしツール</h2>
+
+<% if flash[:alert] %>
+  <div style="color: red; margin-bottom: 10px;">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<%= form_with url: blur_processor_upload_path, local: true, multipart: true do |f| %>
+  <div style="margin-bottom: 20px;">
+    <label><strong>1. 動画ファイルを選択：</strong></label><br>
+    <%= f.file_field :video, accept: "video/*" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <label><strong>2. エフェクトの種類を選択：</strong></label><br>
+    <div>
+      <%= f.radio_button :blur_mode, 'mosaic', checked: true %>
+      <%= f.label :blur_mode_mosaic, 'モザイク（ピクセル化）' %>
+    </div>
+    <div>
+      <%= f.radio_button :blur_mode, 'blur' %>
+      <%= f.label :blur_mode_blur, 'ぼかし（ガウスぼかし）' %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.submit "ぼかし処理を実行する" %>
+  </div>
+<% end %>
