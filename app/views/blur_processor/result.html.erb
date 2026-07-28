@@ -1,28 +1,22 @@
-<div style="max-width: 600px; margin: 40px auto; font-family: sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; text-align: center;">
-  <h2 style="color: #28a745;">モザイク処理が完了しました！</h2>
-  <p style="color: #666; font-size: 14px; margin-bottom: 20px;">AIによる顔・人物のぼかし加工が終わりました。プレビュー確認およびダウンロードが可能です。</p>
+<div class="max-w-xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md text-center">
+  <h1 class="text-2xl font-bold mb-6 text-gray-800">モザイク処理完了</h1>
 
-  <% if @output_filename.present? %>
-    <!-- 処理済み動画のプレビュー -->
-    <div style="margin-bottom: 20px;">
-      <video controls style="max-width: 100%; border-radius: 4px; border: 1px solid #ccc;">
-        <source src="<%= @download_path %>" type="video/mp4">
-        お使いのブラウザは動画タグをサポートしていません。
-      </video>
-    </div>
+  <!-- 動画プレビュー -->
+  <div class="mb-6 flex justify-center">
+    <video width="100%" controls class="rounded shadow max-h-96">
+      <source src="<%= @video_url %>" type="video/mp4">
+      お使いのブラウザは動画タグをサポートしていません。
+    </video>
+  </div>
 
+  <!-- アクションボタン -->
+  <div class="flex flex-col gap-4">
     <!-- ダウンロードボタン -->
-    <div style="margin-bottom: 20px;">
-      <a href="<%= @download_path %>" download="<%= @output_filename %>" style="background: #28a745; color: white; text-decoration: none; padding: 12px 24px; font-size: 16px; border-radius: 4px; display: inline-block;">
-        処理済み動画をダウンロード
-      </a>
-    </div>
-  <% else %>
-    <p style="color: red;">動画ファイルが見つかりませんでした。</p>
-  <% end %>
+    <a href="<%= @video_url %>" download="mosaic_video.mp4" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded transition">
+      動画をダウンロードする
+    </a>
 
-  <!-- トップに戻るリンク -->
-  <div style="margin-top: 30px;">
-    <%= link_to "別の動画を処理する", root_path, style: "color: #007bff; text-decoration: none;" %>
+    <!-- 戻るリンク -->
+    <%= link_to "別の動画を処理する", root_path, class: "text-gray-600 hover:underline mt-2" %>
   </div>
 </div>
